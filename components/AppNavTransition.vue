@@ -81,9 +81,9 @@ export default {
 
     activeUsers() {
       if (this.page === 'place') {
-        let arr = [];
-        arr.push(this.selectedUser);
-        return arr
+        let user = [];
+        user.push(this.selectedUser);
+        return user
       }
       return this.users
     }
