@@ -1,11 +1,11 @@
 <template>
   <transition-group tag="div">
-    <div v-for="(user, i) in users" 
+    <div v-for="(user, i) in activeUsers"
       @click="changeUser(i)"
-      :key="user.name" 
+      :key="user.name"
       :class="[user === selectedUser ? activeUser : secondaryUser, `profile-${i}`]"
       :ref="`profile${i}`"
-    > 
+    >
       <div class="online"></div>
       <img :src="user.img" />
     </div>
@@ -77,10 +77,22 @@ export default {
   },
   computed: {
     ...mapState(['page', 'users', 'indexedUser']),
-    ...mapGetters(['selectedUser'])
+    ...mapGetters(['selectedUser']),
+
+    activeUsers() {
+      if (this.page === 'place') {
+        let arr = [];
+        arr.push(this.selectedUser);
+        return arr
+      }
+      return this.users
+    }
   },
   methods: {
     changeUser(i) {
+      if (this.page === 'place') {
+        return
+      }
       this.$store.commit('changeUser', i)
       if (this.page === 'group') {
         const el = this.$refs.profile0[0]
